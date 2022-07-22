@@ -1,4 +1,24 @@
-package select
+package
+
+import (
+	"context"
+	"database/sql"
+	"fmt"
+	"log"
+	"strings"
+	"time"
+)
+select
+
+import (
+	"context"
+	"database/sql"
+	"fmt"
+	"log"
+	"strings"
+	"time"
+)
+select
 
 import (
 	"context"
@@ -9,11 +29,13 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"go1/select"
+	"go1/insert"
 )
 
 const (
 	username = "root"
-	password = "password"
+	password = "root"
 	hostname = "127.0.0.1:3306"
 	dbname   = "ecommerce"
 )

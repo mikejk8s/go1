@@ -13,9 +13,9 @@ import (
 
 const (
 	username = "root"
-	password = "password"
+	password = "root"
 	hostname = "127.0.0.1:3306"
-	dbname   = "ecommerce"
+	dbname   = "go1"
 )
 
 type item struct {
@@ -73,8 +73,8 @@ func dbConnection() (*sql.DB, error) {
 }
 
 func createItemTable(db *sql.DB) error {
-	query := `CREATE TABLE IF NOT EXISTS item(item_id int primary key auto_increment, item_name text, 
-        item_price int, created_at datetime default CURRENT_TIMESTAMP, updated_at datetime default CURRENT_TIMESTAMP)`
+	query := `CREATE TABLE IF NOT EXISTS item(id int primary key auto_increment, name text, 
+        price int, created_at datetime default CURRENT_TIMESTAMP, updated_at datetime default CURRENT_TIMESTAMP)`
 	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
 	res, err := db.ExecContext(ctx, query)
@@ -91,8 +91,8 @@ func createItemTable(db *sql.DB) error {
 	return nil
 }
 
-func insert(db *sql.DB, p item) error {
-	query := "INSERT INTO item(item_name, item_price) VALUES (?, ?)"
+func Insert(db *sql.DB, p item) error {
+	query := "INSERT INTO item(name, price) VALUES (?, ?)"
 	ctx, cancelfunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelfunc()
 	stmt, err := db.PrepareContext(ctx, query)
@@ -122,7 +122,7 @@ func insert(db *sql.DB, p item) error {
 }
 
 func multipleInsert(db *sql.DB, items []item) error {
-	query := "INSERT INTO item(item_name, item_price) VALUES "
+	query := "INSERT INTO item(name, price) VALUES "
 	var inserts []string
 	var params []interface{}
 	for _, v := range items {
@@ -154,7 +154,7 @@ func multipleInsert(db *sql.DB, items []item) error {
 	return nil
 }
 
-func main() {
+func SeedDB() {
 	db, err := dbConnection()
 	if err != nil {
 		log.Printf("Error %s when getting db connection", err)
@@ -168,10 +168,10 @@ func main() {
 		return
 	}
 	i := item{
-		name:  "iphone",
+		name:  "Axe",
 		price: 950,
 	}
-	err = insert(db, i)
+	err = Insert(db, i)
 	if err != nil {
 		log.Printf("Insert item failed with error %s", err)
 		return
@@ -187,7 +187,7 @@ func main() {
 	}
 	err = multipleInsert(db, []item{i1, i2})
 	if err != nil {
-		log.Printf("Multiple insert failed with error %s", err)
+		log.Printf("Multiple Insert failed with error %s", err)
 		return
 	}
 }

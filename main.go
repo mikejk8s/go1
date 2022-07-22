@@ -21,6 +21,11 @@ func dsn(dbName string) string {
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s", username, password, hostname, dbName)
 }
 
+func insert() {
+	insert().Insert() // insert.go
+
+}
+
 func main() {
 	db, err := sql.Open("mysql", dsn(""))
 	if err != nil {

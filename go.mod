@@ -1,4 +1,4 @@
-module github.com/golangbot/mysqltutorial
+module github.com/mikejk8s/go1
 
 go 1.18
 
